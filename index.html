@@ -53,6 +53,42 @@
             padding: 1.5rem 0;
         }
 
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-light);
+            transition: 0.3s;
+        }
+
+        .nav-links.mobile {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            flex-direction: column;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .nav-links.mobile.active {
+            display: flex;
+        }
+
+        .nav-links.mobile a {
+            padding: 1rem;
+            text-align: center;
+        }
+
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
@@ -234,7 +270,7 @@
             margin-bottom: 1rem;
         }
 
-        .skills-grid {
+        .skills-grid, .certifications-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
@@ -416,12 +452,16 @@
         }
 
         @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
+            .hamburger {
+                display: flex;
             }
 
             .nav-links {
-                gap: 1rem;
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
             }
 
             .about-content {
@@ -435,6 +475,45 @@
             .cta-buttons {
                 flex-direction: column;
             }
+
+            .section {
+                padding: 3rem 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-links {
+                gap: 1rem;
+            }
+
+            .contact-link {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .skills-grid, .certifications-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
@@ -442,11 +521,17 @@
     <header>
         <nav class="container">
             <div class="logo">Piyush Pal</div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#experience">Experience</a></li>
+                <li><a href="#certifications">Certifications</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -659,6 +744,49 @@
         </div>
     </section>
 
+    <section id="certifications" class="section" style="background: rgba(30, 41, 59, 0.3);">
+        <div class="container">
+            <h2 class="section-title">Certifications</h2>
+            <div class="certifications-grid">
+                <div class="skill-card">
+                    <h3>Python Programming - Python With DSA Bootcamp</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                        <strong>Udemy</strong><br>
+                        Completed: August 2025
+                    </p>
+                    <a href="https://www.udemy.com/certificate/UC-a1767635-b109-4c6b-b85f-3a7359ee87c9/" target="_blank" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.2rem; font-size: 0.9rem;">View Certificate →</a>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Java Programming - Beginner to Master</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                        <strong>Udemy</strong><br>
+                        Completed: October 2024
+                    </p>
+                    <a href="https://www.udemy.com/certificate/UC-60375208-6777-4e5f-8086-122df47473de/" target="_blank" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.2rem; font-size: 0.9rem;">View Certificate →</a>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Data Structures and Algorithms</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                        <strong>Great Learning</strong><br>
+                        Completed: April 2024
+                    </p>
+                    <a href="http://verify.mygreatlearning.com/BSFLGSCN" target="_blank" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.2rem; font-size: 0.9rem;">View Certificate →</a>
+                </div>
+
+                <div class="skill-card">
+                    <h3>JEE MAIN</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                        <strong>Secured 90.682 percentile</strong><br>
+                        June 2022
+                    </p>
+                    <a href="https://drive.google.com/file/d/1lav2dmPiv-bwUcF_AlhSLdsJ16yff4ig/view?usp=sharing" target="_blank" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.2rem; font-size: 0.9rem;">View Certificate →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="contact" class="section">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
@@ -701,6 +829,25 @@
                         block: 'start'
                     });
                 }
+            });
+        });
+
+        // Hamburger menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile');
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('mobile');
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
             });
         });
 

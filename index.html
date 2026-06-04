@@ -1,890 +1,1072 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piyush Pal - Developer Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #8b5cf6;
-            --bg-dark: #0f172a;
-            --bg-light: #1e293b;
-            --text-light: #e2e8f0;
-            --text-muted: #94a3b8;
-            --accent: #22d3ee;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 0;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 4px;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: var(--text-light);
-            transition: 0.3s;
-        }
-
-        .nav-links.mobile {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            flex-direction: column;
-            padding: 1rem 0;
-            border-top: 1px solid rgba(99, 102, 241, 0.2);
-        }
-
-        .nav-links.mobile.active {
-            display: flex;
-        }
-
-        .nav-links.mobile a {
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: 80px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent);
-            border-radius: 50%;
-            top: -200px;
-            right: -200px;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .hero-content {
-            flex: 1;
-            z-index: 1;
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            animation: fadeInUp 0.8s ease-out 0.2s backwards;
-        }
-
-        .hero-description {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            max-width: 600px;
-            animation: fadeInUp 0.8s ease-out 0.4s backwards;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            animation: fadeInUp 0.8s ease-out 0.6s backwards;
-        }
-
-        .btn {
-            padding: 0.8rem 2rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-light);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .section {
-            padding: 5rem 0;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 2px;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-text {
-            color: var(--text-muted);
-            line-height: 1.8;
-        }
-
-        .about-text p {
-            margin-bottom: 1rem;
-        }
-
-        .skills-grid, .certifications-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .skill-card {
-            background: var(--bg-light);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            transition: all 0.3s;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
-        }
-
-        .skill-card h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .skill-tag {
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--accent);
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            font-size: 0.9rem;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: var(--bg-light);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            transition: all 0.3s;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.3);
-        }
-
-        .project-content {
-            padding: 1.5rem;
-        }
-
-        .project-title {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            color: var(--text-light);
-        }
-
-        .project-description {
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .tech-badge {
-            background: rgba(34, 211, 238, 0.1);
-            color: var(--accent);
-            padding: 0.3rem 0.7rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
-        }
-
-        .experience-timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .experience-timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 2px;
-            background: linear-gradient(180deg, var(--primary), var(--secondary));
-        }
-
-        .experience-item {
-            position: relative;
-            margin-bottom: 2rem;
-            padding-left: 2rem;
-        }
-
-        .experience-item::before {
-            content: '';
-            position: absolute;
-            left: -2.5rem;
-            top: 0;
-            width: 12px;
-            height: 12px;
-            background: var(--primary);
-            border-radius: 50%;
-            border: 3px solid var(--bg-dark);
-        }
-
-        .experience-item h3 {
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
-        }
-
-        .experience-item .date {
-            color: var(--accent);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .experience-item p {
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-content {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-light);
-            text-decoration: none;
-            padding: 1rem 1.5rem;
-            background: var(--bg-light);
-            border-radius: 8px;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            transition: all 0.3s;
-        }
-
-        .contact-link:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-        }
-
-        footer {
-            background: var(--bg-light);
-            padding: 2rem 0;
-            text-align: center;
-            color: var(--text-muted);
-            border-top: 1px solid rgba(99, 102, 241, 0.2);
-        }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-            }
-
-            .section {
-                padding: 3rem 0;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-links {
-                gap: 1rem;
-            }
-
-            .contact-link {
-                padding: 0.8rem 1rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .hero-title {
-                font-size: 3rem;
-            }
-
-            .hero-description {
-                font-size: 1rem;
-            }
-
-            .skills-grid, .certifications-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .projects-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piyush Pal — Backend Engineer</title>
+<meta name="description" content="Piyush Pal — Python Backend Developer specialising in REST APIs, Flask, Firebase, and scalable cloud systems.">
+<meta property="og:title" content="Piyush Pal — Backend Engineer">
+<meta property="og:description" content="Python developer building scalable backends, REST APIs, and cloud-integrated systems.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root {
+  --black: #070a0f;
+  --white: #f0ede6;
+  --cream: #e8e3d9;
+  --ink: #1a1f2e;
+  --gold: #c9a84c;
+  --gold-dim: #8a6e2f;
+  --rust: #b84c2e;
+  --sky: #3a7bd5;
+  --muted: #6b7280;
+  --card: #0e1118;
+  --border: rgba(201,168,76,0.18);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+::selection { background: var(--gold); color: var(--black); }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Mono', monospace;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Custom cursor */
+.cursor {
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+  mix-blend-mode: exclusion;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.25s ease, scale 0.2s ease;
+  mix-blend-mode: exclusion;
+  transform-origin: center;
+}
+
+/* Noise overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.35;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 3rem;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(18px);
+  background: rgba(7,10,15,0.82);
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.nav-links { display: flex; gap: 2.4rem; list-style: none; }
+.nav-links a {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--white); transition: 0.3s; }
+.mob-menu {
+  display: none;
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: rgba(7,10,15,0.98);
+  padding: 2rem;
+  flex-direction: column; gap: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  z-index: 99;
+}
+.mob-menu.open { display: flex; }
+.mob-menu a {
+  color: var(--white); text-decoration: none;
+  font-size: 0.85rem; letter-spacing: 0.14em; text-transform: uppercase;
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 120px 3rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* grid lines */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* big background number */
+.hero-bg-num {
+  position: absolute;
+  right: -0.05em;
+  bottom: -0.25em;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(18rem, 28vw, 34rem);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(201,168,76,0.08);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hero-inner { position: relative; z-index: 2; max-width: 820px; }
+
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 1rem;
+  font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.8rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block; width: 40px; height: 1px; background: var(--gold);
+}
+
+.hero-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.4rem, 8vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 0.4em;
+  opacity: 0;
+  animation: riseIn 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s forwards;
+}
+.hero-name span { color: var(--gold); }
+
+.hero-role {
+  font-size: clamp(1rem, 2.2vw, 1.4rem);
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: riseIn 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+}
+
+.hero-desc {
+  max-width: 560px;
+  font-size: 0.88rem;
+  line-height: 1.9;
+  color: rgba(240,237,230,0.6);
+  margin-bottom: 2.8rem;
+  opacity: 0;
+  animation: riseIn 0.9s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
+}
+
+.hero-btns {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  opacity: 0;
+  animation: riseIn 0.9s cubic-bezier(0.16,1,0.3,1) 0.7s forwards;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.9rem 2rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.25s;
+  cursor: none;
+}
+.btn-gold {
+  background: var(--gold);
+  color: var(--black);
+  border: 1px solid var(--gold);
+}
+.btn-gold:hover {
+  background: transparent;
+  color: var(--gold);
+  box-shadow: 0 0 24px rgba(201,168,76,0.25);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(240,237,230,0.25);
+}
+.btn-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* stats strip */
+.hero-stats {
+  display: flex; gap: 3rem;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  opacity: 0;
+  animation: riseIn 0.9s cubic-bezier(0.16,1,0.3,1) 0.9s forwards;
+}
+.stat-val {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: var(--gold);
+}
+.stat-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+@keyframes riseIn {
+  from { opacity:0; transform: translateY(28px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* ─── SECTION BASE ─── */
+section { padding: 7rem 3rem; }
+.section-label {
+  display: flex; align-items: center; gap: 1rem;
+  font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.section-label::before {
+  content: '';
+  display: block; width: 30px; height: 1px; background: var(--gold);
+}
+h2.section-heading {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-bottom: 3.5rem;
+  color: var(--white);
+}
+h2.section-heading em {
+  color: var(--gold);
+  font-style: normal;
+}
+
+/* ─── ABOUT ─── */
+#about { background: var(--ink); }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+.about-text p {
+  font-size: 0.88rem;
+  line-height: 1.95;
+  color: rgba(240,237,230,0.65);
+  margin-bottom: 1.2rem;
+}
+.about-highlights {
+  display: flex; flex-direction: column; gap: 1.2rem;
+}
+.highlight-item {
+  padding: 1.4rem 1.6rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 2px;
+  background: rgba(201,168,76,0.03);
+  transition: background 0.2s;
+}
+.highlight-item:hover { background: rgba(201,168,76,0.07); }
+.hi-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: var(--gold);
+  line-height: 1;
+}
+.hi-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+.hi-desc {
+  font-size: 0.78rem;
+  color: rgba(240,237,230,0.5);
+  margin-top: 0.4rem;
+  line-height: 1.6;
+}
+
+/* ─── SKILLS ─── */
+#skills { background: var(--black); }
+.skills-layout {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  border: 1px solid var(--border);
+}
+.skill-block {
+  padding: 2rem 1.8rem;
+  border-right: 1px solid var(--border);
+  transition: background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.skill-block:last-child { border-right: none; }
+.skill-block::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.skill-block:hover::after { transform: scaleX(1); }
+.skill-block:hover { background: rgba(201,168,76,0.04); }
+.skill-block h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.4rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+.skill-list {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.sk {
+  font-size: 0.72rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(240,237,230,0.12);
+  border-radius: 2px;
+  color: rgba(240,237,230,0.7);
+  transition: all 0.2s;
+}
+.sk:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ─── PROJECTS ─── */
+#projects { background: var(--ink); }
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+.proj-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2.2rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.proj-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--rust));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.proj-card:hover::before { transform: scaleX(1); }
+.proj-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201,168,76,0.35);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+}
+.proj-num {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--gold-dim);
+  margin-bottom: 1.2rem;
+  font-family: 'Syne', sans-serif;
+}
+.proj-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  margin-bottom: 0.9rem;
+}
+.proj-card p {
+  font-size: 0.8rem;
+  line-height: 1.85;
+  color: var(--muted);
+  margin-bottom: 1.4rem;
+}
+.proj-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1.4rem; }
+.pt {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.65rem;
+  border: 1px solid rgba(58,123,213,0.3);
+  border-radius: 2px;
+  color: var(--sky);
+}
+.proj-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  transition: gap 0.2s;
+}
+.proj-link:hover { gap: 0.7rem; }
+
+/* ─── EXPERIENCE ─── */
+#experience { background: var(--black); }
+.exp-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 4rem;
+  padding: 3rem 0;
+  border-top: 1px solid var(--border);
+}
+.exp-meta { }
+.exp-company {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+.exp-date {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.exp-content h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--white);
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.01em;
+}
+.exp-points { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+.exp-points li {
+  font-size: 0.83rem;
+  line-height: 1.75;
+  color: rgba(240,237,230,0.6);
+  padding-left: 1.4rem;
+  position: relative;
+}
+.exp-points li::before {
+  content: '→';
+  position: absolute; left: 0;
+  color: var(--gold);
+}
+
+/* ─── CERTS ─── */
+#certifications { background: var(--ink); }
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+.cert-card {
+  padding: 1.8rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  transition: all 0.25s;
+}
+.cert-card:hover {
+  border-color: rgba(201,168,76,0.4);
+  transform: translateY(-3px);
+}
+.cert-icon {
+  font-size: 1.4rem;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+.cert-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--white);
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+.cert-meta {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 1.2rem;
+}
+.cert-link {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  transition: gap 0.2s;
+}
+.cert-link:hover { gap: 0.6rem; }
+
+/* ─── CONTACT ─── */
+#contact { background: var(--black); }
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+.contact-cta {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 1.2rem;
+}
+.contact-cta em { color: var(--gold); font-style: normal; }
+.contact-sub {
+  font-size: 0.83rem;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.contact-links { display: flex; flex-direction: column; gap: 1rem; }
+.clink {
+  display: flex; align-items: center; gap: 1.2rem;
+  padding: 1.2rem 1.6rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  text-decoration: none;
+  color: var(--white);
+  font-size: 0.82rem;
+  transition: all 0.25s;
+}
+.clink:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateX(4px);
+}
+.clink i {
+  width: 20px;
+  color: var(--gold);
+  font-size: 1rem;
+}
+.clink-label { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); display: block; }
+.clink-val { font-size: 0.82rem; color: var(--white); }
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.foot-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  color: var(--gold);
+  font-size: 0.9rem;
+}
+
+/* ─── SCROLL INDICATOR ─── */
+.scroll-line {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--rust));
+  z-index: 200;
+  transition: width 0.1s linear;
+}
+
+/* ─── REVEAL ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .skills-layout { grid-template-columns: repeat(2, 1fr); }
+  .certs-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+}
+@media (max-width: 768px) {
+  nav { padding: 1.2rem 1.5rem; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  section { padding: 5rem 1.5rem; }
+  .hero { padding: 100px 1.5rem 4rem; }
+  .hero-stats { gap: 2rem; flex-wrap: wrap; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .skills-layout { grid-template-columns: 1fr; }
+  .certs-grid { grid-template-columns: 1fr; }
+  .exp-row { grid-template-columns: 1fr; gap: 1.5rem; }
+  .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+  .hero-bg-num { font-size: 14rem; }
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+}
+</style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <div class="logo">Piyush Pal</div>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#certifications">Certifications</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">Hi, I'm Piyush Pal</h1>
-                <p class="hero-subtitle">Developer & Backend Engineer</p>
-                <p class="hero-description">
-                    Specializing in Python development with expertise in building scalable backend systems, REST APIs, 
-                    and cloud integration. Also proficient in Java, C, and C++ for versatile software development.
-                </p>
-                <div class="cta-buttons">
-                    <a href="#projects" class="btn btn-primary">View My Work</a>
-                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-                </div>
-            </div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="scroll-line" id="scrollLine"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">PP</div>
+  <div class="hamburger" id="ham">
+    <span></span><span></span><span></span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <a href="#about" class="mob-link">About</a>
+  <a href="#skills" class="mob-link">Skills</a>
+  <a href="#projects" class="mob-link">Projects</a>
+  <a href="#experience" class="mob-link">Experience</a>
+  <a href="#certifications" class="mob-link">Certs</a>
+  <a href="#contact" class="mob-link">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-num">01</div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Backend Engineer · Python Specialist</div>
+    <h1 class="hero-name">Piyush<br><span>Pal</span></h1>
+    <p class="hero-role">Building scalable systems, one clean API at a time.</p>
+    <p class="hero-desc">
+      Python developer specialising in RESTful APIs, cloud integration, and production-grade backend architecture. I write code that's not just functional — it's maintainable, performant, and built to last.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-gold">View Projects →</a>
+      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-val">4+</div>
+        <div class="stat-label">Live Projects</div>
+      </div>
+      <div>
+        <div class="stat-val">60%</div>
+        <div class="stat-label">Efficiency Gain (FTP)</div>
+      </div>
+      <div>
+        <div class="stat-val">30%</div>
+        <div class="stat-label">Productivity Boost</div>
+      </div>
+      <div>
+        <div class="stat-val">90.7</div>
+        <div class="stat-label">JEE Percentile</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label reveal">01 — About</div>
+  <h2 class="section-heading reveal">Crafting backends<br>that <em>perform</em></h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        I'm a Backend Developer with a sharp focus on Python, REST APIs, and cloud-integrated solutions. My work sits at the intersection of clean architecture and measurable performance — I don't just ship features, I ship improvements.
+      </p>
+      <p>
+        At InternPe, I restructured backend systems and refactored critical codebases, pushing code productivity from 50% to 80% by systematically applying efficient data structures and algorithms. That metric-driven mindset is something I bring to every project.
+      </p>
+      <p>
+        My delivered solutions span a construction management platform with sub-second load times, a secure file transfer service achieving a 60% efficiency jump through modular architecture, and an AI image generator enhanced by advanced caching mechanisms.
+      </p>
+      <p>
+        Currently open to Backend Developer, Software Engineer, and Python Developer roles where I can contribute to impactful engineering work.
+      </p>
+    </div>
+    <div class="about-highlights">
+      <div class="highlight-item reveal">
+        <div class="hi-num">30%</div>
+        <div class="hi-label">Productivity Improvement</div>
+        <div class="hi-desc">Code productivity raised from 50% → 80% at InternPe via DSA-optimised backend refactoring.</div>
+      </div>
+      <div class="highlight-item reveal">
+        <div class="hi-num">60%</div>
+        <div class="hi-label">Efficiency Gain</div>
+        <div class="hi-desc">FTP Services project improved code efficiency through modular, reusable architecture.</div>
+      </div>
+      <div class="highlight-item reveal">
+        <div class="hi-num">&lt;1s</div>
+        <div class="hi-label">Load Time Target</div>
+        <div class="hi-desc">Construction platform optimised for sub-second load times on Vercel.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label reveal">02 — Skills</div>
+  <h2 class="section-heading reveal">Technical<br><em>Arsenal</em></h2>
+  <div class="skills-layout reveal">
+    <div class="skill-block">
+      <h3>Languages</h3>
+      <div class="skill-list">
+        <span class="sk">Python</span>
+        <span class="sk">Java</span>
+        <span class="sk">C</span>
+        <span class="sk">C++</span>
+        <span class="sk">JavaScript</span>
+        <span class="sk">HTML5</span>
+        <span class="sk">CSS3</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h3>Backend & Web</h3>
+      <div class="skill-list">
+        <span class="sk">Flask</span>
+        <span class="sk">REST APIs</span>
+        <span class="sk">Firebase</span>
+        <span class="sk">SQL</span>
+        <span class="sk">Authentication</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h3>Tools & Platforms</h3>
+      <div class="skill-list">
+        <span class="sk">Git</span>
+        <span class="sk">GitHub</span>
+        <span class="sk">Vercel</span>
+        <span class="sk">VS Code</span>
+        <span class="sk">IntelliJ</span>
+        <span class="sk">CI/CD</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h3>Core Concepts</h3>
+      <div class="skill-list">
+        <span class="sk">DSA</span>
+        <span class="sk">OOP</span>
+        <span class="sk">Responsive Design</span>
+        <span class="sk">Caching</span>
+        <span class="sk">Modular Arch.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label reveal">03 — Projects</div>
+  <h2 class="section-heading reveal">Selected<br><em>Work</em></h2>
+  <div class="projects-grid">
+
+    <div class="proj-card reveal">
+      <div class="proj-num">Project 01</div>
+      <h3>Construction Website</h3>
+      <p>A dynamic construction management platform built on Python Flask with RESTful API endpoints. Deployed on Vercel with a fully optimised CI/CD pipeline, achieving sub-second load times and a modern responsive frontend.</p>
+      <div class="proj-tags">
+        <span class="pt">Python Flask</span>
+        <span class="pt">REST API</span>
+        <span class="pt">Vercel</span>
+        <span class="pt">CI/CD</span>
+        <span class="pt">JavaScript</span>
+      </div>
+      <a href="https://aditi-constructions.vercel.app/" target="_blank" class="proj-link">View Live <i class="fas fa-arrow-right" style="font-size:0.7rem;"></i></a>
+    </div>
+
+    <div class="proj-card reveal">
+      <div class="proj-num">Project 02</div>
+      <h3>FTP Services</h3>
+      <p>Web-based secure file transfer service integrating Firebase for authentication and real-time storage. Modular architecture delivered a 60% improvement in code efficiency — transferring files across devices seamlessly and securely.</p>
+      <div class="proj-tags">
+        <span class="pt">Python</span>
+        <span class="pt">Firebase</span>
+        <span class="pt">Authentication</span>
+        <span class="pt">File Handling</span>
+      </div>
+      <a href="https://ftp-services.vercel.app/" target="_blank" class="proj-link">View Live <i class="fas fa-arrow-right" style="font-size:0.7rem;"></i></a>
+    </div>
+
+    <div class="proj-card reveal">
+      <div class="proj-num">Project 03</div>
+      <h3>FLEXNEST</h3>
+      <p>Responsive movie & TV discovery app powered by the TMDB API. Features advanced search with debouncing, genre filtering, pagination, YouTube trailer overlay, dark/light theme toggle, full ARIA accessibility, and local storage state management.</p>
+      <div class="proj-tags">
+        <span class="pt">JavaScript</span>
+        <span class="pt">TMDB API</span>
+        <span class="pt">Accessibility</span>
+        <span class="pt">Local Storage</span>
+        <span class="pt">HTML5/CSS3</span>
+      </div>
+      <a href="https://flexnest-one.vercel.app/" target="_blank" class="proj-link">View Live <i class="fas fa-arrow-right" style="font-size:0.7rem;"></i></a>
+    </div>
+
+    <div class="proj-card reveal">
+      <div class="proj-num">Project 04</div>
+      <h3>AI Text-to-Image Generator</h3>
+      <p>Real-time image generation powered by advanced AI algorithms. Features responsive UI with light/dark mode toggle, cross-browser compatibility, and a 30% performance boost achieved through optimised rendering pipelines and intelligent caching.</p>
+      <div class="proj-tags">
+        <span class="pt">Python</span>
+        <span class="pt">AI/ML</span>
+        <span class="pt">Caching</span>
+        <span class="pt">Responsive UI</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label reveal">04 — Experience</div>
+  <h2 class="section-heading reveal">Where I've<br><em>Worked</em></h2>
+  <div class="exp-row reveal">
+    <div class="exp-meta">
+      <div class="exp-company">InternPe</div>
+      <div class="exp-date">Aug 2024 – Sep 2024<br>Remote</div>
+    </div>
+    <div class="exp-content">
+      <h3>Python Developer Intern</h3>
+      <ul class="exp-points">
+        <li>Completed an intensive one-month Python development internship, contributing directly to live team projects and codebase improvements.</li>
+        <li>Developed Python-based solutions employing efficient data structures and algorithms, resulting in measurable performance and UX improvements.</li>
+        <li>Optimised backend processes and streamlined development workflows, raising code productivity from 50% to 80% — a 30% net improvement.</li>
+        <li>Refactored legacy code for maintainability and scalability, establishing cleaner architecture patterns for the wider team.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label reveal">05 — Certifications</div>
+  <h2 class="section-heading reveal">Credentials &<br><em>Achievements</em></h2>
+  <div class="certs-grid">
+
+    <div class="cert-card reveal">
+      <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+      <h3>Python With DSA Bootcamp</h3>
+      <div class="cert-meta">Udemy · August 2025</div>
+      <a href="https://www.udemy.com/certificate/UC-a1767635-b109-4c6b-b85f-3a7359ee87c9/" target="_blank" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon"><i class="fab fa-java"></i></div>
+      <h3>Java Programming — Beginner to Master</h3>
+      <div class="cert-meta">Udemy · October 2024</div>
+      <a href="https://www.udemy.com/certificate/UC-60375208-6777-4e5f-8086-122df47473de/" target="_blank" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon"><i class="fas fa-project-diagram"></i></div>
+      <h3>Data Structures and Algorithms</h3>
+      <div class="cert-meta">Great Learning · April 2024</div>
+      <a href="https://verify.mygreatlearning.com/BSFLGSCN" target="_blank" rel="noopener noreferrer" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon"><i class="fas fa-database"></i></div>
+      <h3>Database Management & Systems</h3>
+      <div class="cert-meta">Great Learning · April 2024</div>
+      <a href="https://drive.google.com/file/d/1haxE5qnGeBzVW_dlIIfuryRYzCn6DDp9/view?usp=sharing" target="_blank" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon"><i class="fas fa-award"></i></div>
+      <h3>JEE Main — 90.682 Percentile</h3>
+      <div class="cert-meta">NTA · June 2022</div>
+      <a href="https://drive.google.com/file/d/1lav2dmPiv-bwUcF_AlhSLdsJ16yff4ig/view?usp=sharing" target="_blank" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon"><i class="fas fa-robot"></i></div>
+      <h3>GenAI Powered Data Analytics Simulation</h3>
+      <div class="cert-meta">The Forage · January 2026</div>
+      <a href="https://www.theforage.com/completion-certificates/ifobHAoMjQs9s6bKS/gMTdCXwDdLYoXZ3wG_ifobHAoMjQs9s6bKS_vPwhRYMxx8RksCDdu_1767341186286_completion_certificate.pdf" target="_blank" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label reveal">06 — Contact</div>
+  <div class="contact-inner">
+    <div class="reveal">
+      <p class="contact-cta">Let's build something<br><em>remarkable</em></p>
+      <p class="contact-sub">Open to Backend Developer, Software Engineer, and Python Developer roles. I'd love to connect and explore how I can contribute to your engineering team.</p>
+    </div>
+    <div class="contact-links reveal">
+      <a href="mailto:piyushpal9000@gmail.com" class="clink">
+        <i class="fas fa-envelope"></i>
+        <div>
+          <span class="clink-label">Email</span>
+          <span class="clink-val">piyushpal9000@gmail.com</span>
         </div>
-    </section>
-
-    <section id="about" class="section">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>
-                        I'm a Backend Developer specializing in Python, REST APIs, and scalable cloud solutions. I build efficient, production-ready applications with a focus on performance optimization and clean architecture. My technical expertise spans backend development, API design, and cloud integration, with proven results in delivering measurable improvements.
-                    </p>
-                    <p>
-                        At InternPe, I optimized backend systems and refactored codebases, achieving a 30% improvement in productivity through systematic implementation of efficient data structures and algorithms. This experience reinforced my approach: write code that's not just functional, but maintainable and scalable.
-                    </p>
-
-                    <p>
-                        <strong>Delivered Solutions:</strong><br>
-                        → Construction management platform with optimized performance and sub-second load times (Vercel)<br>
-                        → Secure file transfer service achieving 60% efficiency improvement through modular architecture<br>
-                        → AI-powered image generator with 30% performance boost via advanced caching mechanisms
-                    </p>
-                    <p>
-                        I combine technical depth with practical problem-solving skills. Whether architecting RESTful APIs, optimizing database queries, or integrating cloud services, I focus on building solutions that scale. Currently available for Backend Developer, Software Engineer, and Python Developer roles. Open to opportunities where I can contribute to impactful projects and work with talented engineering teams. Let's connect.
-                    </p>
-                </div>
-
-            </div>
+      </a>
+      <a href="https://www.linkedin.com/in/piyush-pal-55a254291" target="_blank" class="clink">
+        <i class="fab fa-linkedin"></i>
+        <div>
+          <span class="clink-label">LinkedIn</span>
+          <span class="clink-val">piyush-pal-55a254291</span>
         </div>
-    </section>
-
-    <section id="skills" class="section" style="background: rgba(30, 41, 59, 0.3);">
-        <div class="container">
-            <h2 class="section-title">Technical Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <h3>Programming Languages</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python (Primary)</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">C</span>
-                        <span class="skill-tag">C++</span>
-                        <span class="skill-tag">HTML5</span>
-                        <span class="skill-tag">CSS3</span>
-                        <span class="skill-tag">JavaScript</span>
-                    </div>
-                </div>
-                <div class="skill-card">
-                    <h3>Backend & Web Technologies</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Flask</span>
-                        <span class="skill-tag">REST APIs</span>
-                        <span class="skill-tag">Firebase</span>
-                        <span class="skill-tag">SQL</span>
-                    </div>
-                </div>
-                <div class="skill-card">
-                    <h3>Tools & Platforms</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">GitHub</span>
-                        <span class="skill-tag">VS Code</span>
-                        <span class="skill-tag">IntelliJ IDEA</span>
-                        <span class="skill-tag">Vercel</span>
-                        <span class="skill-tag">Git</span>
-                    </div>
-                </div>
-                <div class="skill-card">
-                    <h3>Core Concepts</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">DSA</span>
-                        <span class="skill-tag">OOP</span>
-                        <span class="skill-tag">CI/CD</span>
-                        <span class="skill-tag">Responsive Design</span>
-                    </div>
-                </div>
-            </div>
+      </a>
+      <a href="https://github.com/Pal7696" target="_blank" class="clink">
+        <i class="fab fa-github"></i>
+        <div>
+          <span class="clink-label">GitHub</span>
+          <span class="clink-val">github.com/Pal7696</span>
         </div>
-    </section>
-
-    <section id="projects" class="section">
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">Construction Website</h3>
-                        <p class="project-description">
-                            Developed a dynamic web application using Python Flask framework with RESTful API endpoints 
-                            for seamless data handling. Designed responsive frontend with modern UI patterns and configured 
-                            CI/CD pipeline for Vercel deployment with optimized performance.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-badge">Python Flask</span>
-                            <span class="tech-badge">REST API</span>
-                            <span class="tech-badge">HTML5</span>
-                            <span class="tech-badge">CSS3</span>
-                            <span class="tech-badge">JavaScript</span>
-                            <span class="tech-badge">Vercel</span>
-                        </div>
-                        <a href="https://aditi-constructions.vercel.app/" target="_blank" class="btn btn-primary" style="display: inline-block; margin-top: 1rem; padding: 0.6rem 1.2rem; font-size: 0.9rem;">View Live Project →</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">FTP Services</h3>
-                        <p class="project-description">
-                            Built a web-based FTP service enabling secure file transfers across devices. 
-                            Integrated Firebase for authentication and backend storage with real-time frontend. 
-                            Improved code efficiency by 60% through modular architecture.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-badge">Python</span>
-                            <span class="tech-badge">Firebase</span>
-                            <span class="tech-badge">Authentication</span>
-                            <span class="tech-badge">File Handling</span>
-                        </div>
-                        <a href="https://ftp-services.vercel.app/" target="_blank" class="btn btn-primary" style="display: inline-block; margin-top: 1rem; padding: 0.6rem 1.2rem; font-size: 0.9rem;">View Live Project →</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">FLEXNEST</h3>
-                        <p class="project-description">
-                            Built a responsive movie/TV discovery app using TMDB API with advanced search, genre filtering, 
-                            and pagination. Implemented interactive features including theme toggle, smooth scrolling tabs, 
-                            and YouTube trailer overlay with full accessibility support (ARIA labels, keyboard navigation). 
-                            Optimized performance with async JavaScript, debounced search, and local storage for state management.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-badge">HTML5</span>
-                            <span class="tech-badge">CSS3</span>
-                            <span class="tech-badge">JavaScript</span>
-                            <span class="tech-badge">TMDB API</span>
-                            <span class="tech-badge">Local Storage</span>
-                            <span class="tech-badge">Accessibility</span>
-                        </div>
-                        <a href="https://flexnest-one.vercel.app/" target="_blank" class="btn btn-primary" style="display: inline-block; margin-top: 1rem; padding: 0.6rem 1.2rem; font-size: 0.9rem;">View Live Project →</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">AI Text to Image Generator</h3>
-                        <p class="project-description">
-                            Created a real-time text-to-image generator powered by advanced AI algorithms. 
-                            Implemented responsive UI with light/dark mode toggle and cross-browser compatibility. 
-                            Enhanced performance by 30% through optimized rendering and caching.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-badge">Python</span>
-                            <span class="tech-badge">AI/ML</span>
-                            <span class="tech-badge">Responsive UI</span>
-                            <span class="tech-badge">Caching</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </a>
+      <a href="tel:+919305228955" class="clink">
+        <i class="fas fa-phone"></i>
+        <div>
+          <span class="clink-label">Phone</span>
+          <span class="clink-val">+91 93052 28955</span>
         </div>
-    </section>
+      </a>
+    </div>
+  </div>
+</section>
 
-    <section id="experience" class="section" style="background: rgba(30, 41, 59, 0.3);">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="experience-timeline">
-                <div class="experience-item">
-                    <h3>Python Developer Intern</h3>
-                    <div class="date">InternPe (Remote) | Aug 2024 - Sep 2024</div>
-                    <p>
-                        Completed an intensive one-month internship focusing on Python development, 
-                        enhancing skills in programming and contributing to team projects.
-                    </p>
-                    <p>
-                        Developed Python-based solutions using data structures and algorithms, 
-                        improving performance and user experience significantly.
-                    </p>
-                    <p>
-                        Enhanced code productivity from 50% to 80% by optimizing backend processes 
-                        and streamlining development workflows.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">Piyush Pal</div>
+  <div>© 2025 — Built with precision.</div>
+  <div>Backend Engineer · Python Specialist</div>
+</footer>
 
-    <section id="certifications" class="section" style="background: rgba(30, 41, 59, 0.3);">
-        <div class="container">
-            <h2 class="section-title">Certifications</h2>
-            <div class="certifications-grid">
-                <div class="skill-card">
-                    <h3>Python Programming - Python With DSA Bootcamp</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
-                        <strong>Udemy</strong><br>
-                        Completed: August 2025
-                    </p>
-                    <a href="https://www.udemy.com/certificate/UC-a1767635-b109-4c6b-b85f-3a7359ee87c9/" target="_blank" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.2rem; font-size: 0.9rem;">View Certificate →</a>
-                </div>
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  cursor.style.transform = `translate(${mx-5}px, ${my-5}px)`;
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.transform = `translate(${rx-18}px, ${ry-18}px)`;
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+document.querySelectorAll('a, button, .proj-card, .cert-card, .clink').forEach(el => {
+  el.addEventListener('mouseenter', () => { ring.style.scale = '1.6'; });
+  el.addEventListener('mouseleave', () => { ring.style.scale = '1'; });
+});
 
-                <div class="skill-card">
-                    <h3>Java Programming - Beginner to Master</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
-                        <strong>Udemy</strong><br>
-                        Completed: October 2024
-                    </p>
-                    <a href="https://www.udemy.com/certificate/UC-60375208-6777-4e5f-8086-122df47473de/" target="_blank" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.2rem; font-size: 0.9rem;">View Certificate →</a>
-                </div>
+// Scroll progress
+const scrollLine = document.getElementById('scrollLine');
+document.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  scrollLine.style.width = pct + '%';
+});
 
-                <div class="skill-card">
-                    <h3>Data Structures and Algorithms</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
-                        <strong>Great Learning</strong><br>
-                        Completed: April 2024
-                    </p>
-                    <a href="http://verify.mygreatlearning.com/BSFLGSCN" target="_blank" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.2rem; font-size: 0.9rem;">View Certificate →</a>
-                </div>
+// Hamburger
+const ham = document.getElementById('ham');
+const mob = document.getElementById('mobMenu');
+ham.addEventListener('click', () => mob.classList.toggle('open'));
+document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', () => mob.classList.remove('open')));
 
-                <div class="skill-card">
-                    <h3>Database Management and System</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
-                        <strong>GreatLearning</strong><br>
-                        Completed: April 2024
-                    </p>
-                    <a href="https://drive.google.com/file/d/1haxE5qnGeBzVW_dlIIfuryRYzCn6DDp9/view?usp=sharing" target="_blank" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.2rem; font-size: 0.9rem;">View Certificate →</a>
-                </div>
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
 
-                <div class="skill-card">
-                    <h3>JEE MAIN</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
-                        <strong>Secured 90.682 percentile</strong><br>
-                        June 2022
-                    </p>
-                    <a href="https://drive.google.com/file/d/1lav2dmPiv-bwUcF_AlhSLdsJ16yff4ig/view?usp=sharing" target="_blank" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.2rem; font-size: 0.9rem;">View Certificate →</a>
-                </div>
+// Security: rel=noopener on all external links
+document.querySelectorAll('a[target="_blank"]').forEach(a => {
+  a.setAttribute('rel', 'noopener noreferrer');
+});
 
-                <div class="skill-card">
-                    <h3>GenAI Powered Data Analytics Job Simulation</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
-                        <strong>The Forage</strong><br>
-                        Completed: January 2nd, 2026
-                    </p>
-                    <a href="https://www.theforage.com/completion-certificates/ifobHAoMjQs9s6bKS/gMTdCXwDdLYoXZ3wG_ifobHAoMjQs9s6bKS_vPwhRYMxx8RksCDdu_1767341186286_completion_certificate.pdf" target="_blank" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.2rem; font-size: 0.9rem;">View Certificate →</a>
-                </div>
-            </div>
-        </div>
-    </section>
+// Active nav link on scroll
+const sections = document.querySelectorAll('section[id]');
+const navAs = document.querySelectorAll('.nav-links a');
+const activateNav = () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navAs.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+  });
+};
+document.addEventListener('scroll', activateNav);
 
-    <section id="contact" class="section">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <p style="color: var(--text-muted); margin-bottom: 2rem;">
-                    I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
-                </p>
-                <div class="contact-links">
-                    <a href="mailto:piyushpal9000@gmail.com" class="contact-link">
-                        <i class="fas fa-envelope"></i> Email
-                    </a>
-                    <a href="https://www.linkedin.com/in/piyush-pal-55a254291" target="_blank" class="contact-link">
-                        <i class="fab fa-linkedin"></i> LinkedIn
-                    </a>
-                    <a href="https://github.com/Pal7696" target="_blank" class="contact-link">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                    <a href="tel:+919305228955" class="contact-link">
-                        <i class="fas fa-phone"></i> Phone
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Piyush Pal. Built with passion.</p>
-        </div>
-    </footer>
-
-    <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Hamburger menu toggle
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('mobile');
-            navLinks.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('mobile');
-                navLinks.classList.remove('active');
-                hamburger.classList.remove('active');
-            });
-        });
-
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.skill-card, .project-card, .experience-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
+// Reveal on scroll
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
-
-
-

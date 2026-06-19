@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Piyush Pal — Backend Engineer</title>
-<meta name="description" content="Piyush Pal — Python Backend Developer specialising in REST APIs, Flask, Firebase, and scalable cloud systems.">
-<meta property="og:title" content="Piyush Pal — Backend Engineer">
-<meta property="og:description" content="Python developer building scalable backends, REST APIs, and cloud-integrated systems.">
+<title>Piyush Pal — Backend &amp; Data Engineer</title>
+<meta name="description" content="Piyush Pal — Backend Developer and Data/Analytics specialist working with Python, REST APIs, Firebase, Excel, and Power BI.">
+<meta property="og:title" content="Piyush Pal — Backend &amp; Data Engineer">
+<meta property="og:description" content="Python developer building scalable backends and data-driven systems with REST APIs, Power BI, and cloud-integrated tools.">
 <meta property="og:type" content="website">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -244,6 +244,7 @@ nav {
   padding-top: 2rem;
   border-top: 1px solid var(--border);
   opacity: 0;
+  flex-wrap: wrap;
   animation: riseIn 0.9s cubic-bezier(0.16,1,0.3,1) 0.9s forwards;
 }
 .stat-val {
@@ -341,12 +342,12 @@ h2.section-heading em {
 #skills { background: var(--black); }
 .skills-layout {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 1px;
   border: 1px solid var(--border);
 }
 .skill-block {
-  padding: 2rem 1.8rem;
+  padding: 2rem 1.6rem;
   border-right: 1px solid var(--border);
   transition: background 0.2s;
   position: relative;
@@ -390,6 +391,11 @@ h2.section-heading em {
   border-color: var(--gold);
   color: var(--gold);
 }
+.sk-data {
+  border-color: rgba(58,123,213,0.3);
+  color: var(--sky);
+}
+.sk-data:hover { border-color: var(--sky); color: var(--sky); }
 
 /* ─── PROJECTS ─── */
 #projects { background: var(--ink); }
@@ -485,6 +491,17 @@ h2.section-heading em {
   font-size: 0.7rem;
   letter-spacing: 0.12em;
   color: var(--muted);
+}
+.exp-badge {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid rgba(58,123,213,0.35);
+  color: var(--sky);
+  border-radius: 2px;
 }
 .exp-content h3 {
   font-family: 'Syne', sans-serif;
@@ -699,11 +716,11 @@ footer {
 <section class="hero">
   <div class="hero-bg-num">01</div>
   <div class="hero-inner">
-    <div class="hero-eyebrow">Backend Engineer · Python Specialist</div>
+    <div class="hero-eyebrow">Backend Engineer · Data &amp; Analytics</div>
     <h1 class="hero-name">Piyush<br><span>Pal</span></h1>
-    <p class="hero-role">Building scalable systems, one clean API at a time.</p>
+    <p class="hero-role">Building scalable systems and turning data into decisions.</p>
     <p class="hero-desc">
-      Python developer specialising in RESTful APIs, cloud integration, and production-grade backend architecture. I write code that's not just functional — it's maintainable, performant, and built to last.
+      Python developer specialising in RESTful APIs, cloud integration, and production-grade backend architecture — paired with hands-on experience turning raw operational data into Power BI dashboards that drive real decisions. I write code that's maintainable and build reports that get used.
     </p>
     <div class="hero-btns">
       <a href="#projects" class="btn btn-gold">View Projects →</a>
@@ -733,20 +750,20 @@ footer {
 <!-- ABOUT -->
 <section id="about">
   <div class="section-label reveal">01 — About</div>
-  <h2 class="section-heading reveal">Crafting backends<br>that <em>perform</em></h2>
+  <h2 class="section-heading reveal">Code that <em>performs</em>,<br>data that <em>informs</em></h2>
   <div class="about-grid">
     <div class="about-text reveal">
       <p>
-        I'm a Backend Developer with a sharp focus on Python, REST APIs, and cloud-integrated solutions. My work sits at the intersection of clean architecture and measurable performance — I don't just ship features, I ship improvements.
+        I'm a Backend Developer with a growing focus on data and analytics — Python, REST APIs, and cloud-integrated solutions on one side; Excel and Power BI on the other. My work sits at the intersection of clean architecture and measurable outcomes — I don't just ship features or reports, I ship improvements.
       </p>
       <p>
         At InternPe, I restructured backend systems and refactored critical codebases, pushing code productivity from 50% to 80% by systematically applying efficient data structures and algorithms. That metric-driven mindset is something I bring to every project.
       </p>
       <p>
-        My delivered solutions span a construction management platform with sub-second load times, a secure file transfer service achieving a 60% efficiency jump through modular architecture, and an AI image generator enhanced by advanced caching mechanisms.
+        Currently, at Eternal (Zomato), I manage inventory, vendor, and logistics data across Excel and build Power BI dashboards that give the operations team faster visibility into key metrics — applying the same rigor I bring to backend systems to operational data.
       </p>
       <p>
-        Currently open to Backend Developer, Software Engineer, and Python Developer roles where I can contribute to impactful engineering work.
+        Currently open to Backend Developer, Software Engineer, and Data/Business Analyst roles where I can contribute to impactful engineering and data work.
       </p>
     </div>
     <div class="about-highlights">
@@ -761,9 +778,9 @@ footer {
         <div class="hi-desc">FTP Services project improved code efficiency through modular, reusable architecture.</div>
       </div>
       <div class="highlight-item reveal">
-        <div class="hi-num">&lt;1s</div>
-        <div class="hi-label">Load Time Target</div>
-        <div class="hi-desc">Construction platform optimised for sub-second load times on Vercel.</div>
+        <div class="hi-num">PBI</div>
+        <div class="hi-label">Dashboards Built</div>
+        <div class="hi-desc">Built Power BI dashboards at Eternal (Zomato) to track operational metrics from live supply chain data.</div>
       </div>
     </div>
   </div>
@@ -794,6 +811,15 @@ footer {
         <span class="sk">Firebase</span>
         <span class="sk">SQL</span>
         <span class="sk">Authentication</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h3>Data & Analytics</h3>
+      <div class="skill-list">
+        <span class="sk sk-data">Excel (Advanced)</span>
+        <span class="sk sk-data">Power BI</span>
+        <span class="sk sk-data">Data Visualization</span>
+        <span class="sk sk-data">SQL</span>
       </div>
     </div>
     <div class="skill-block">
@@ -886,6 +912,22 @@ footer {
 <section id="experience">
   <div class="section-label reveal">04 — Experience</div>
   <h2 class="section-heading reveal">Where I've<br><em>Worked</em></h2>
+
+  <div class="exp-row reveal">
+    <div class="exp-meta">
+      <div class="exp-company">Eternal Limited (Zomato)</div>
+      <div class="exp-date">Jun 2026 – Present<br>Varanasi, India</div>
+      <span class="exp-badge">Data &amp; Analytics</span>
+    </div>
+    <div class="exp-content">
+      <h3>Intern</h3>
+      <ul class="exp-points">
+        <li>Structured and maintained multi-source operational datasets in Excel — inventory, vendor, and logistics records — using formulas and validation rules to keep data clean and audit-ready.</li>
+        <li>Built and maintained Power BI dashboards translating raw operational data into visual reports, giving the operations team real-time visibility into key metrics.</li>
+      </ul>
+    </div>
+  </div>
+
   <div class="exp-row reveal">
     <div class="exp-meta">
       <div class="exp-company">InternPe</div>
@@ -908,6 +950,13 @@ footer {
   <div class="section-label reveal">05 — Certifications</div>
   <h2 class="section-heading reveal">Credentials &<br><em>Achievements</em></h2>
   <div class="certs-grid">
+
+    <div class="cert-card reveal">
+      <div class="cert-icon"><i class="fas fa-robot"></i></div>
+      <h3>GenAI Powered Data Analytics Simulation</h3>
+      <div class="cert-meta">The Forage · January 2026</div>
+      <a href="https://www.theforage.com/completion-certificates/ifobHAoMjQs9s6bKS/gMTdCXwDdLYoXZ3wG_ifobHAoMjQs9s6bKS_vPwhRYMxx8RksCDdu_1767341186286_completion_certificate.pdf" target="_blank" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
+    </div>
 
     <div class="cert-card reveal">
       <div class="cert-icon"><i class="fas fa-certificate"></i></div>
@@ -944,13 +993,6 @@ footer {
       <a href="https://drive.google.com/file/d/1lav2dmPiv-bwUcF_AlhSLdsJ16yff4ig/view?usp=sharing" target="_blank" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
     </div>
 
-    <div class="cert-card reveal">
-      <div class="cert-icon"><i class="fas fa-robot"></i></div>
-      <h3>GenAI Powered Data Analytics Simulation</h3>
-      <div class="cert-meta">The Forage · January 2026</div>
-      <a href="https://www.theforage.com/completion-certificates/ifobHAoMjQs9s6bKS/gMTdCXwDdLYoXZ3wG_ifobHAoMjQs9s6bKS_vPwhRYMxx8RksCDdu_1767341186286_completion_certificate.pdf" target="_blank" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
-    </div>
-
   </div>
 </section>
 
@@ -960,7 +1002,7 @@ footer {
   <div class="contact-inner">
     <div class="reveal">
       <p class="contact-cta">Let's build something<br><em>remarkable</em></p>
-      <p class="contact-sub">Open to Backend Developer, Software Engineer, and Python Developer roles. I'd love to connect and explore how I can contribute to your engineering team.</p>
+      <p class="contact-sub">Open to Backend Developer, Software Engineer, and Data/Business Analyst roles. I'd love to connect and explore how I can contribute to your team.</p>
     </div>
     <div class="contact-links reveal">
       <a href="mailto:piyushpal9000@gmail.com" class="clink">
@@ -998,8 +1040,8 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="foot-logo">Piyush Pal</div>
-  <div>© 2025 — Built with precision.</div>
-  <div>Backend Engineer · Python Specialist</div>
+  <div>© 2026 — Built with precision.</div>
+  <div>Backend Engineer · Data &amp; Analytics</div>
 </footer>
 
 <script>

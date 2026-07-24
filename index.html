@@ -10,6 +10,7 @@
 <meta property="og:type" content="website">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root {
   --black: #070a0f;
@@ -487,6 +488,20 @@ h2.section-heading em {
   color: var(--gold);
   margin-bottom: 0.3rem;
 }
+.exp-company-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.company-logo-img {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  object-fit: contain;
+  background: var(--white);
+  padding: 2px;
+  flex-shrink: 0;
+}
 .exp-date {
   font-size: 0.7rem;
   letter-spacing: 0.12em;
@@ -538,6 +553,8 @@ h2.section-heading em {
   border: 1px solid var(--border);
   border-radius: 3px;
   transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
 }
 .cert-card:hover {
   border-color: rgba(201,168,76,0.4);
@@ -607,19 +624,43 @@ h2.section-heading em {
   color: var(--white);
   font-size: 0.82rem;
   transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
 }
+.clink::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--brand, var(--gold));
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.clink:hover::before { transform: scaleY(1); }
 .clink:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-  transform: translateX(4px);
+  border-color: var(--brand, var(--gold));
+  transform: translateX(6px);
 }
-.clink i {
-  width: 20px;
-  color: var(--gold);
-  font-size: 1rem;
+.clink:hover .clink-val { color: var(--brand, var(--gold)); }
+.clink-icon {
+  width: 42px; height: 42px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brand, var(--gold)) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand, var(--gold)) 35%, transparent);
+  color: var(--brand, var(--gold));
+  font-size: 1.05rem;
+  transition: all 0.25s;
+}
+.clink:hover .clink-icon {
+  background: var(--brand, var(--gold));
+  color: var(--black);
+  transform: scale(1.08) rotate(-6deg);
 }
 .clink-label { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); display: block; }
-.clink-val { font-size: 0.82rem; color: var(--white); }
+.clink-val { font-size: 0.82rem; color: var(--white); transition: color 0.25s; }
 
 /* ─── FOOTER ─── */
 footer {
@@ -657,7 +698,93 @@ footer {
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* ─── RESPONSIVE ─── */
+/* ─── HERO PARTICLE CANVAS ─── */
+#heroCanvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.55;
+}
+
+/* ─── TERMINAL WIDGET ─── */
+.terminal {
+  position: relative;
+  z-index: 2;
+  margin-top: 2.6rem;
+  max-width: 560px;
+  background: rgba(14,17,24,0.85);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  opacity: 0;
+  animation: riseIn 0.9s cubic-bezier(0.16,1,0.3,1) 1.05s forwards;
+  overflow: hidden;
+}
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+}
+.terminal-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: rgba(240,237,230,0.15);
+}
+.terminal-dot:nth-child(1) { background: #e0605a; }
+.terminal-dot:nth-child(2) { background: #e0b84c; }
+.terminal-dot:nth-child(3) { background: #5cb87a; }
+.terminal-title {
+  margin-left: 0.6rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.terminal-body {
+  padding: 1.2rem 1.4rem 1.4rem;
+  font-size: 0.76rem;
+  line-height: 1.9;
+  min-height: 132px;
+}
+.terminal-line { color: rgba(240,237,230,0.55); white-space: pre; }
+.terminal-prompt { color: var(--gold); }
+.terminal-out { color: var(--sky); }
+.terminal-ok { color: #5cb87a; }
+.terminal-cursor {
+  display: inline-block;
+  width: 7px; height: 1em;
+  background: var(--gold);
+  vertical-align: text-bottom;
+  animation: blink 0.9s steps(1) infinite;
+  margin-left: 2px;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ─── TILT CARDS ─── */
+.proj-card, .cert-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.proj-card { transition: transform 0.15s ease, border-color 0.3s, box-shadow 0.3s; }
+.cert-card { transition: transform 0.15s ease, border-color 0.25s; }
+.tilt-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(circle 180px at var(--mx,50%) var(--my,50%), rgba(201,168,76,0.14), transparent 70%);
+}
+.proj-card:hover .tilt-glow, .cert-card:hover .tilt-glow { opacity: 1; }
+
+@media (max-width: 768px) {
+  .terminal { max-width: 100%; }
+}
 @media (max-width: 1024px) {
   .skills-layout { grid-template-columns: repeat(2, 1fr); }
   .certs-grid { grid-template-columns: repeat(2, 1fr); }
@@ -714,6 +841,7 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
+  <canvas id="heroCanvas"></canvas>
   <div class="hero-bg-num">01</div>
   <div class="hero-inner">
     <div class="hero-eyebrow">Backend Engineer · Data &amp; Analytics</div>
@@ -725,6 +853,13 @@ footer {
     <div class="hero-btns">
       <a href="#projects" class="btn btn-gold">View Projects →</a>
       <a href="#contact" class="btn btn-outline">Get In Touch</a>
+    </div>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+        <span class="terminal-title">pipeline.py — zsh</span>
+      </div>
+      <div class="terminal-body" id="terminalBody"></div>
     </div>
     <div class="hero-stats">
       <div>
@@ -760,7 +895,7 @@ footer {
         At InternPe, I restructured backend systems and refactored critical codebases, pushing code productivity from 50% to 80% by systematically applying efficient data structures and algorithms. That metric-driven mindset is something I bring to every project.
       </p>
       <p>
-        Currently, at Eternal (Zomato), I manage inventory, vendor, and logistics data across Excel and build Power BI dashboards that give the operations team faster visibility into key metrics — applying the same rigor I bring to backend systems to operational data.
+        Currently, at Eternal (Zomato), I automate data workflows with Python and JavaScript, build dashboards in Redash, Superset, and Power BI, and write SQL to turn operational data into insights the team can act on — applying the same rigor I bring to backend systems to operational data.
       </p>
       <p>
         Currently open to Backend Developer, Software Engineer, and Data/Business Analyst roles where I can contribute to impactful engineering and data work.
@@ -780,7 +915,7 @@ footer {
       <div class="highlight-item reveal">
         <div class="hi-num">PBI</div>
         <div class="hi-label">Dashboards Built</div>
-        <div class="hi-desc">Built Power BI dashboards at Eternal (Zomato) to track operational metrics from live supply chain data.</div>
+        <div class="hi-desc">Built dashboards in Redash, Superset, and Power BI at Eternal (Zomato) to surface supply chain metrics.</div>
       </div>
     </div>
   </div>
@@ -818,6 +953,8 @@ footer {
       <div class="skill-list">
         <span class="sk sk-data">Excel (Advanced)</span>
         <span class="sk sk-data">Power BI</span>
+        <span class="sk sk-data">Redash</span>
+        <span class="sk sk-data">Superset</span>
         <span class="sk sk-data">Data Visualization</span>
         <span class="sk sk-data">SQL</span>
       </div>
@@ -852,7 +989,7 @@ footer {
   <h2 class="section-heading reveal">Selected<br><em>Work</em></h2>
   <div class="projects-grid">
 
-    <div class="proj-card reveal">
+    <div class="proj-card reveal"><div class="tilt-glow"></div>
       <div class="proj-num">Project 01</div>
       <h3>Construction Website</h3>
       <p>A dynamic construction management platform built on Python Flask with RESTful API endpoints. Deployed on Vercel with a fully optimised CI/CD pipeline, achieving sub-second load times and a modern responsive frontend.</p>
@@ -866,7 +1003,7 @@ footer {
       <a href="https://aditi-constructions.vercel.app/" target="_blank" class="proj-link">View Live <i class="fas fa-arrow-right" style="font-size:0.7rem;"></i></a>
     </div>
 
-    <div class="proj-card reveal">
+    <div class="proj-card reveal"><div class="tilt-glow"></div>
       <div class="proj-num">Project 02</div>
       <h3>FTP Services</h3>
       <p>Web-based secure file transfer service integrating Firebase for authentication and real-time storage. Modular architecture delivered a 60% improvement in code efficiency — transferring files across devices seamlessly and securely.</p>
@@ -879,7 +1016,7 @@ footer {
       <a href="https://ftp-services.vercel.app/" target="_blank" class="proj-link">View Live <i class="fas fa-arrow-right" style="font-size:0.7rem;"></i></a>
     </div>
 
-    <div class="proj-card reveal">
+    <div class="proj-card reveal"><div class="tilt-glow"></div>
       <div class="proj-num">Project 03</div>
       <h3>FLEXNEST</h3>
       <p>Responsive movie & TV discovery app powered by the TMDB API. Features advanced search with debouncing, genre filtering, pagination, YouTube trailer overlay, dark/light theme toggle, full ARIA accessibility, and local storage state management.</p>
@@ -893,7 +1030,7 @@ footer {
       <a href="https://flexnest-one.vercel.app/" target="_blank" class="proj-link">View Live <i class="fas fa-arrow-right" style="font-size:0.7rem;"></i></a>
     </div>
 
-    <div class="proj-card reveal">
+    <div class="proj-card reveal"><div class="tilt-glow"></div>
       <div class="proj-num">Project 04</div>
       <h3>AI Text-to-Image Generator</h3>
       <p>Real-time image generation powered by advanced AI algorithms. Features responsive UI with light/dark mode toggle, cross-browser compatibility, and a 30% performance boost achieved through optimised rendering pipelines and intelligent caching.</p>
@@ -915,15 +1052,20 @@ footer {
 
   <div class="exp-row reveal">
     <div class="exp-meta">
-      <div class="exp-company">Eternal Limited (Zomato)</div>
+      <div class="exp-company exp-company-logo">
+        <img src="https://logo.clearbit.com/zomato.com" alt="Zomato logo" class="company-logo-img" onerror="this.style.display='none'">
+        <span>Eternal Limited (Zomato)</span>
+      </div>
       <div class="exp-date">Jun 2026 – Present<br>Varanasi, India</div>
       <span class="exp-badge">Data &amp; Analytics</span>
     </div>
     <div class="exp-content">
       <h3>Intern</h3>
       <ul class="exp-points">
-        <li>Structured and maintained multi-source operational datasets in Excel — inventory, vendor, and logistics records — using formulas and validation rules to keep data clean and audit-ready.</li>
-        <li>Built and maintained Power BI dashboards translating raw operational data into visual reports, giving the operations team real-time visibility into key metrics.</li>
+        <li>Write Python and JavaScript scripts to automate repetitive data-handling tasks, cutting down manual effort in daily reporting.</li>
+        <li>Build and maintain dashboards in Redash and Superset so teams can pull operational insights without needing manual reports.</li>
+        <li>Write and optimize SQL queries to extract, join, and aggregate data from operational databases for analysis and reporting.</li>
+        <li>Build Power BI and Excel dashboards (PivotTables, lookup functions) to give stakeholders real-time visibility into supply chain metrics.</li>
       </ul>
     </div>
   </div>
@@ -951,42 +1093,42 @@ footer {
   <h2 class="section-heading reveal">Credentials &<br><em>Achievements</em></h2>
   <div class="certs-grid">
 
-    <div class="cert-card reveal">
+    <div class="cert-card reveal"><div class="tilt-glow"></div>
       <div class="cert-icon"><i class="fas fa-robot"></i></div>
       <h3>GenAI Powered Data Analytics Simulation</h3>
       <div class="cert-meta">The Forage · January 2026</div>
       <a href="https://www.theforage.com/completion-certificates/ifobHAoMjQs9s6bKS/gMTdCXwDdLYoXZ3wG_ifobHAoMjQs9s6bKS_vPwhRYMxx8RksCDdu_1767341186286_completion_certificate.pdf" target="_blank" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
     </div>
 
-    <div class="cert-card reveal">
+    <div class="cert-card reveal"><div class="tilt-glow"></div>
       <div class="cert-icon"><i class="fas fa-certificate"></i></div>
       <h3>Python With DSA Bootcamp</h3>
       <div class="cert-meta">Udemy · August 2025</div>
       <a href="https://www.udemy.com/certificate/UC-a1767635-b109-4c6b-b85f-3a7359ee87c9/" target="_blank" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
     </div>
 
-    <div class="cert-card reveal">
+    <div class="cert-card reveal"><div class="tilt-glow"></div>
       <div class="cert-icon"><i class="fab fa-java"></i></div>
       <h3>Java Programming — Beginner to Master</h3>
       <div class="cert-meta">Udemy · October 2024</div>
       <a href="https://www.udemy.com/certificate/UC-60375208-6777-4e5f-8086-122df47473de/" target="_blank" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
     </div>
 
-    <div class="cert-card reveal">
+    <div class="cert-card reveal"><div class="tilt-glow"></div>
       <div class="cert-icon"><i class="fas fa-project-diagram"></i></div>
       <h3>Data Structures and Algorithms</h3>
       <div class="cert-meta">Great Learning · April 2024</div>
       <a href="https://verify.mygreatlearning.com/BSFLGSCN" target="_blank" rel="noopener noreferrer" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
     </div>
 
-    <div class="cert-card reveal">
+    <div class="cert-card reveal"><div class="tilt-glow"></div>
       <div class="cert-icon"><i class="fas fa-database"></i></div>
       <h3>Database Management & Systems</h3>
       <div class="cert-meta">Great Learning · April 2024</div>
       <a href="https://drive.google.com/file/d/1haxE5qnGeBzVW_dlIIfuryRYzCn6DDp9/view?usp=sharing" target="_blank" class="cert-link">Verify <i class="fas fa-arrow-right"></i></a>
     </div>
 
-    <div class="cert-card reveal">
+    <div class="cert-card reveal"><div class="tilt-glow"></div>
       <div class="cert-icon"><i class="fas fa-award"></i></div>
       <h3>JEE Main — 90.682 Percentile</h3>
       <div class="cert-meta">NTA · June 2022</div>
@@ -1005,29 +1147,29 @@ footer {
       <p class="contact-sub">Open to Backend Developer, Software Engineer, and Data/Business Analyst roles. I'd love to connect and explore how I can contribute to your team.</p>
     </div>
     <div class="contact-links reveal">
-      <a href="mailto:piyushpal9000@gmail.com" class="clink">
-        <i class="fas fa-envelope"></i>
+      <a href="mailto:piyushpal9000@gmail.com" class="clink" style="--brand:#d64c3f">
+        <span class="clink-icon"><i class="fas fa-envelope"></i></span>
         <div>
           <span class="clink-label">Email</span>
           <span class="clink-val">piyushpal9000@gmail.com</span>
         </div>
       </a>
-      <a href="https://www.linkedin.com/in/piyush-pal-55a254291" target="_blank" class="clink">
-        <i class="fab fa-linkedin"></i>
+      <a href="https://www.linkedin.com/in/piyush-pal-55a254291" target="_blank" class="clink" style="--brand:#3a7bd5">
+        <span class="clink-icon"><i class="fab fa-linkedin-in"></i></span>
         <div>
           <span class="clink-label">LinkedIn</span>
           <span class="clink-val">piyush-pal-55a254291</span>
         </div>
       </a>
-      <a href="https://github.com/Pal7696" target="_blank" class="clink">
-        <i class="fab fa-github"></i>
+      <a href="https://github.com/Pal7696" target="_blank" class="clink" style="--brand:#c9c9c9">
+        <span class="clink-icon"><i class="fab fa-github"></i></span>
         <div>
           <span class="clink-label">GitHub</span>
           <span class="clink-val">github.com/Pal7696</span>
         </div>
       </a>
-      <a href="tel:+919305228955" class="clink">
-        <i class="fas fa-phone"></i>
+      <a href="tel:+919305228955" class="clink" style="--brand:#4cae5a">
+        <span class="clink-icon"><i class="fas fa-phone"></i></span>
         <div>
           <span class="clink-label">Phone</span>
           <span class="clink-val">+91 93052 28955</span>
@@ -1045,6 +1187,157 @@ footer {
 </footer>
 
 <script>
+// ─── Three.js particle network (data pipeline visual) ───
+(function initParticles() {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas || !window.THREE) return;
+  const heroEl = canvas.parentElement;
+  let w = heroEl.clientWidth, h = heroEl.clientHeight;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(w, h);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000);
+  camera.position.z = 60;
+
+  const COUNT = window.innerWidth < 768 ? 40 : 90;
+  const nodes = [];
+  const positions = new Float32Array(COUNT * 3);
+  for (let i = 0; i < COUNT; i++) {
+    const x = (Math.random() - 0.5) * 140;
+    const y = (Math.random() - 0.5) * 90;
+    const z = (Math.random() - 0.5) * 60;
+    nodes.push({
+      pos: new THREE.Vector3(x, y, z),
+      vel: new THREE.Vector3((Math.random()-0.5)*0.04, (Math.random()-0.5)*0.04, (Math.random()-0.5)*0.02)
+    });
+    positions[i*3] = x; positions[i*3+1] = y; positions[i*3+2] = z;
+  }
+
+  const dotGeo = new THREE.BufferGeometry();
+  dotGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const dotMat = new THREE.PointsMaterial({ color: 0xc9a84c, size: 1.6, transparent: true, opacity: 0.85 });
+  const points = new THREE.Points(dotGeo, dotMat);
+  scene.add(points);
+
+  const lineGeo = new THREE.BufferGeometry();
+  const maxLines = COUNT * 6;
+  const linePositions = new Float32Array(maxLines * 6);
+  const lineGeoAttr = new THREE.BufferAttribute(linePositions, 3);
+  lineGeo.setAttribute('position', lineGeoAttr);
+  const lineMat = new THREE.LineBasicMaterial({ color: 0xc9a84c, transparent: true, opacity: 0.12 });
+  const lines = new THREE.LineSegments(lineGeo, lineMat);
+  scene.add(lines);
+
+  const LINK_DIST = 22;
+
+  function animate() {
+    requestAnimationFrame(animate);
+    let vIdx = 0;
+    for (let i = 0; i < COUNT; i++) {
+      const n = nodes[i];
+      n.pos.add(n.vel);
+      if (Math.abs(n.pos.x) > 70) n.vel.x *= -1;
+      if (Math.abs(n.pos.y) > 45) n.vel.y *= -1;
+      if (Math.abs(n.pos.z) > 30) n.vel.z *= -1;
+      positions[i*3] = n.pos.x; positions[i*3+1] = n.pos.y; positions[i*3+2] = n.pos.z;
+    }
+    dotGeo.attributes.position.needsUpdate = true;
+
+    for (let i = 0; i < COUNT && vIdx < maxLines * 6 - 6; i++) {
+      for (let j = i + 1; j < COUNT; j++) {
+        const d = nodes[i].pos.distanceTo(nodes[j].pos);
+        if (d < LINK_DIST) {
+          linePositions[vIdx++] = nodes[i].pos.x;
+          linePositions[vIdx++] = nodes[i].pos.y;
+          linePositions[vIdx++] = nodes[i].pos.z;
+          linePositions[vIdx++] = nodes[j].pos.x;
+          linePositions[vIdx++] = nodes[j].pos.y;
+          linePositions[vIdx++] = nodes[j].pos.z;
+          if (vIdx >= maxLines * 6 - 6) break;
+        }
+      }
+    }
+    lineGeo.setDrawRange(0, vIdx / 3);
+    lineGeo.attributes.position.needsUpdate = true;
+
+    scene.rotation.y += 0.0006;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    w = heroEl.clientWidth; h = heroEl.clientHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+})();
+
+// ─── Terminal typing animation ───
+(function initTerminal() {
+  const body = document.getElementById('terminalBody');
+  if (!body) return;
+  const script = [
+    { text: '$ python etl_pipeline.py --source zomato_ops', cls: 'terminal-prompt', pause: 500 },
+    { text: '→ connecting to operational database...', cls: 'terminal-out', pause: 600 },
+    { text: '→ extracting & joining inventory, vendor, logistics tables', cls: 'terminal-out', pause: 650 },
+    { text: '→ pushing metrics to Redash · Superset · Power BI', cls: 'terminal-out', pause: 650 },
+    { text: '✓ dashboard refreshed — 0 errors', cls: 'terminal-ok', pause: 1600 }
+  ];
+  let line = 0, char = 0;
+  const cursor = document.createElement('span');
+  cursor.className = 'terminal-cursor';
+
+  function typeLine() {
+    if (line >= script.length) {
+      setTimeout(() => { body.innerHTML = ''; line = 0; char = 0; typeLine(); }, 1800);
+      return;
+    }
+    const entry = script[line];
+    if (char === 0) {
+      const div = document.createElement('div');
+      div.className = 'terminal-line ' + entry.cls;
+      div.id = 'tl-' + line;
+      body.appendChild(div);
+    }
+    const div = document.getElementById('tl-' + line);
+    if (char <= entry.text.length) {
+      div.textContent = entry.text.slice(0, char);
+      div.appendChild(cursor);
+      char++;
+      setTimeout(typeLine, 16 + Math.random() * 22);
+    } else {
+      char = 0; line++;
+      setTimeout(typeLine, entry.pause);
+    }
+  }
+  typeLine();
+})();
+
+// ─── 3D tilt + glow on cards ───
+(function initTilt() {
+  const cards = document.querySelectorAll('.proj-card, .cert-card');
+  cards.forEach(card => {
+    card.style.position = card.style.position || 'relative';
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      const rx = (py - 0.5) * -6;
+      const ry = (px - 0.5) * 8;
+      card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+      card.style.setProperty('--mx', (px * 100) + '%');
+      card.style.setProperty('--my', (py * 100) + '%');
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+})();
+
 // Custom cursor
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursorRing');
